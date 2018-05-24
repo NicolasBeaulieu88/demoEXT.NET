@@ -1,0 +1,63 @@
+﻿<%@ Master Language="C#" CodeBehind="Site.master.cs" Inherits="Utilitaire_EXT.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <title>ALM</title>
+    <script src="jquery-3.0.0.min.js"></script>
+    <script type="text/javascript">
+        var SM;
+
+        function InitColors() {
+            $("#" + SM.CalendarToolBarID).css("background-color", "#157ECB");
+            $("[id^='" + SM.CalendarID + "']").css("background-color", "");
+            $("[id^='" + SM.CalendarID + "']").removeClass("ext-cal-day-today");
+            for (var i = 0; i < SM.ListDeliveryDates.length; ++i) {
+                $("#" + SM.CalendarID + SM.ListDeliveryDates[i]).css("background-color", "#61A8DB");
+                $("#" + SM.CalendarIDEv + SM.ListDeliveryDates[i]).find("div").css("color", "white");
+            }
+
+            $("#" + SM.CalendarID + SM.SelectedDate).css("background-color", "#0768AC");
+            $("#" + SM.CalendarIDEv + SM.SelectedDate).find("div").css("color", "white");
+
+        }
+        var edit = function (editor, e) { //from example.ext
+            if (!(e.value === e.originalValue || (Ext.isDate(e.value) && Ext.Date.isEqual(e.value, e.originalValue)))) {
+                App.direct.EditFiles(e.record.data.IdFile, e.field, e.value);
+            }
+        };
+    </script>
+	<style type="text/css">
+		.x-grid-row .x-grid-cell-inner { white-space: normal; }
+        .x-grid-row-over .x-grid-cell-inner { white-space: normal; }
+	</style>
+</head>
+<body>
+    <form runat="server">
+        <ext:ResourceManager ID="resManager" runat="server" ShowWarningOnAjaxFailure="false" ResetStyles="true"  />
+        <ext:Viewport runat="server" Layout="BorderLayout" > 
+            <Items>
+                <ext:Container ID="MainContainer" runat="server" Layout="VBoxLayout" region="Center">
+                    <LayoutConfig>
+                        <ext:VBoxLayoutConfig Align="Stretch" />
+                    </LayoutConfig> 
+                    <Items>
+                        <ext:Panel runat="server" Flex="1">
+                            <LayoutConfig>
+                                <ext:VBoxLayoutConfig Align="Stretch" />
+                            </LayoutConfig> 
+                            <Content>
+                                <asp:ContentPlaceHolder ID="MainContent" runat="server" >
+                                </asp:ContentPlaceHolder>
+                            </Content>
+                        </ext:Panel>
+                    </Items>  
+                </ext:Container>
+            </Items>
+        </ext:Viewport>
+
+    </form>
+</body>
+</html>
